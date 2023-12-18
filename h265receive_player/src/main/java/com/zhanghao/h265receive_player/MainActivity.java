@@ -3,6 +3,7 @@ package com.zhanghao.h265receive_player;
 import android.app.Activity;
 import android.media.MediaCodec;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 

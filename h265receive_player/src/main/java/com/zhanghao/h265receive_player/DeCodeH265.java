@@ -3,6 +3,8 @@ package com.zhanghao.h265receive_player;
 
 import android.media.MediaCodec;
 import android.media.MediaFormat;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.Surface;
 
 import java.io.IOException;
@@ -51,9 +53,10 @@ public class DeCodeH265 {
      *
      * @param data
      */
+    Handler uiHandler = new Handler(Looper.getMainLooper());
     public void deCode(byte[] data) {
         // 提交数据到解码器
-        int inputBufferID = mediaCodec.dequeueInputBuffer(100000);
+        int inputBufferID = mediaCodec.dequeueInputBuffer(10000);
         if (inputBufferID >= 0) {
             ByteBuffer inputBuffer = mediaCodec.getInputBuffer(inputBufferID);
             assert inputBuffer != null;
@@ -64,11 +67,11 @@ public class DeCodeH265 {
 
         // 从解码器获取数据
         MediaCodec.BufferInfo bufferInfo = new MediaCodec.BufferInfo();
-        int outputBufferID = mediaCodec.dequeueOutputBuffer(bufferInfo, 100000);
+        int outputBufferID = mediaCodec.dequeueOutputBuffer(bufferInfo, 1000);
         // 即使只提交了一份数据到解码器的输入缓冲区，但解码器的输出并不一定是一一对应的，它可能在一次解码操作中产生多个输出缓冲区
         while (outputBufferID >= 0) {
             mediaCodec.releaseOutputBuffer(outputBufferID, true);
-            mediaCodec.dequeueOutputBuffer(bufferInfo,100000);
+            outputBufferID = mediaCodec.dequeueOutputBuffer(bufferInfo,1000);
         }
     }
 }

@@ -17,7 +17,7 @@ public class SocketPull {
     private final String TAG = "zh___SocketPull";
 
     // 修改为指定的服务器地址
-    private final String websocket_url = "ws://192.168.101.103:9521";
+    private final String websocket_url = "ws://192.168.101.111:9521";
     private WebSocketClient webSocket;
     private DeCodeH265 deCodeH265;
 
@@ -49,7 +49,6 @@ public class SocketPull {
             public void onMessage(ByteBuffer bytes) {
                 byte[] data = new byte[bytes.remaining()];
                 bytes.get(data);
-                Log.i(TAG, "onMessage: 1111111111111111111111111111");
                 deCodeH265.deCode(data);
             }
 
@@ -61,7 +60,7 @@ public class SocketPull {
 
             @Override
             public void onError(Exception ex) {
-                Log.e(TAG, "onError: ");
+                Log.e(TAG, "onError: ex = " + ex.getMessage());
             }
         };
         webSocket.connect();
