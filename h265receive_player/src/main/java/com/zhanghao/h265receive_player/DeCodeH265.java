@@ -53,7 +53,6 @@ public class DeCodeH265 {
      *
      * @param data
      */
-    Handler uiHandler = new Handler(Looper.getMainLooper());
     public void deCode(byte[] data) {
         // 提交数据到解码器
         int inputBufferID = mediaCodec.dequeueInputBuffer(10000);
